@@ -21,6 +21,16 @@
         } else if (self.rank == otherCard.rank) {
             score = 4;
         }
+    } else {
+        unsigned numberOfMatchingSuits = 0;
+        unsigned numberOfMatchingRanks = 0;
+        for (PlayingCard *otherCard in otherCards) {
+            if ([self.suit isEqualToString:otherCard.suit])
+                numberOfMatchingSuits++;
+            else if (self.rank == otherCard.rank)
+                numberOfMatchingRanks++;
+        }
+        score = numberOfMatchingSuits + numberOfMatchingRanks * 4;
     }
     
     return score;
@@ -53,7 +63,8 @@
 
 + (NSArray *)rankStrings
 {
-    return @[@"?", @"A", @"2", @"3", @"4", @"5", @"6", @"7", @"8", @"9", @"10", @"J", @"Q", @"K"];
+    return @[@"?", @"A", @"2", @"3", @"4", @"5", @"6",
+             @"7", @"8", @"9", @"10", @"J", @"Q", @"K"];
 }
 
 + (NSUInteger)maxRank

@@ -10,22 +10,30 @@
 #import "PlayingCardDeck.h"
 #import "CardMatchingGame.h"
 
-@interface cardgameViewController ()
-
+@interface cardgameViewController()
 @property (strong, nonatomic) Deck *deck;
 @property (strong, nonatomic) CardMatchingGame *game;
 @property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *cardButtons;
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
-
+@property (weak, nonatomic) IBOutlet UILabel *matchingActionResultsLabel;
 @end
 
-
 @implementation cardgameViewController
+
+- (IBAction)touchStartOverButton
+{
+    _game = nil;
+    self.matchingActionResultsLabel.text = nil;
+    [self updateUI];
+}
 
 - (CardMatchingGame *)game
 {
     if (!_game) {
-        _game = [[CardMatchingGame alloc] initWithCardCount:[self.cardButtons count] usingDeck:self.deck];
+        _game = [[CardMatchingGame alloc]
+                    initWithCardCount:[self.cardButtons count]
+                        usingDeck:self.deck
+                 withMatchingNumber:3];
     }
     return _game;
 }
@@ -38,7 +46,7 @@
 - (IBAction)touchCardButton:(UIButton *)sender
 {
     int cardIndex = [self.cardButtons indexOfObject:sender];
-    [self.game chooseCardAtIndex:cardIndex];
+    self.matchingActionResultsLabel.text = [self.game chooseCardAtIndex:cardIndex];
     [self updateUI];
 }
 
@@ -52,7 +60,6 @@
         [cardButton setBackgroundImage:[self backgroundImageForCard:card]
                               forState:UIControlStateNormal];
         cardButton.enabled = !card.isMatched;
-        
     }
     self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d", self.game.score];
 }
