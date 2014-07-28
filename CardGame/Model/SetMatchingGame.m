@@ -1,19 +1,18 @@
 //
-//  CardMatchingGame.m
+//  SetMatchingGame.m
 //  CardGame
 //
-//  Created by Anthony D'Ambrosio on 7/25/14.
+//  Created by Anthony D'Ambrosio on 7/27/14.
 //  Copyright (c) 2014 DayZeroStudio. All rights reserved.
 //
 
-#import "CardMatchingGame.h"
+#import "SetMatchingGame.h"
 
-@interface CardMatchingGame()
+@interface SetMatchingGame()
 @property (nonatomic, readwrite) NSInteger score;
-@property (nonatomic) NSInteger numberOfCardsToMatch;
 @end
 
-@implementation CardMatchingGame
+@implementation SetMatchingGame
 @synthesize score = _score;
 @synthesize cards = _cards;
 
@@ -23,21 +22,8 @@
     return _cards;
 }
 
-- (instancetype)initWithCardCount:(NSUInteger)count
-                        usingDeck:(Deck *)deck
+- (instancetype)initWithCardCount:(NSUInteger)count usingDeck:(Deck *)deck
 {
-    return [self initWithCardCount:count
-                         usingDeck:deck
-                withMatchingNumber:2];
-}
-
-- (instancetype)initWithCardCount:(NSUInteger)count
-                        usingDeck:(Deck *)deck withMatchingNumber:(NSInteger) numberOfCardToMatch
-{
-    if (numberOfCardToMatch < 2)
-        return nil;
-    self.numberOfCardsToMatch = numberOfCardToMatch;
-    
     self = [super init];
     
     if (count < 2)
@@ -58,6 +44,7 @@
     return self;
 }
 
+#define NUMBER_CARDS_TO_MATCH 3
 static const int MISMATCH_PENALTY = 2;
 static const int MATCH_BONUS = 4;
 static const int COST_TO_CHOOSE = 1;
@@ -77,7 +64,7 @@ static const int COST_TO_CHOOSE = 1;
                     [chosenCards addObject:otherCard];
                 }
             }
-            if ([chosenCards count] == self.numberOfCardsToMatch - 1) {
+            if ([chosenCards count] == NUMBER_CARDS_TO_MATCH-1) {
                 int matchScore = [card match:chosenCards];
                 if (matchScore) { // Success!
                     self.score += matchScore * MATCH_BONUS;
@@ -96,7 +83,7 @@ static const int COST_TO_CHOOSE = 1;
                         [message appendFormat:@"%@ ", otherCard.contents];
                     }
                     [message appendFormat:@"don't match! %d point penalty!",
-                        MISMATCH_PENALTY];
+                     MISMATCH_PENALTY];
                 }
             } else {
                 //message = all cards

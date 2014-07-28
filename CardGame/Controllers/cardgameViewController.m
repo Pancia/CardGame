@@ -5,42 +5,34 @@
 //  Created by Anthony D'Ambrosio on 7/25/14.
 //  Copyright (c) 2014 DayZeroStudio. All rights reserved.
 //
+// Abstract! Implement game, deck, ...
 
-#import "cardgameViewController.h"
-#import "PlayingCardDeck.h"
-#import "CardMatchingGame.h"
+#import "CardGameViewController.h"
 
-@interface cardgameViewController()
-@property (strong, nonatomic) Deck *deck;
-@property (strong, nonatomic) CardMatchingGame *game;
-@property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *cardButtons;
-@property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
-@property (weak, nonatomic) IBOutlet UILabel *matchingActionResultsLabel;
+@interface CardGameViewController ()
+
 @end
 
-@implementation cardgameViewController
+@implementation CardGameViewController
 
+// Override!
 - (IBAction)touchStartOverButton
 {
-    _game = nil;
+    self.game = nil;
     self.matchingActionResultsLabel.text = nil;
     [self updateUI];
 }
 
-- (CardMatchingGame *)game
+// Abstract
+- (CardGame *)game
 {
-    if (!_game) {
-        _game = [[CardMatchingGame alloc]
-                    initWithCardCount:[self.cardButtons count]
-                        usingDeck:self.deck
-                 withMatchingNumber:3];
-    }
-    return _game;
+    return nil;
 }
 
+// Abstract
 - (Deck *)deck
 {
-    return [[PlayingCardDeck alloc] init];
+    return nil;
 }
 
 - (IBAction)touchCardButton:(UIButton *)sender

@@ -21,7 +21,7 @@
         } else if (self.rank == otherCard.rank) {
             score = 4;
         }
-    } else {
+    } else { // Broken, as order affects result
         unsigned numberOfMatchingSuits = 0;
         unsigned numberOfMatchingRanks = 0;
         for (PlayingCard *otherCard in otherCards) {
