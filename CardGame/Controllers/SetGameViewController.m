@@ -8,6 +8,7 @@
 
 #import "SetGameViewController.h"
 #import "SetMatchingDeck.h"
+#import <UIKit/UIColor.h>
 
 @interface SetGameViewController ()
 @property (strong, nonatomic) SetMatchingGame *game;
@@ -30,6 +31,16 @@
 - (Deck *)deck
 {
     return [[SetMatchingDeck alloc] init];
+}
+
+- (NSAttributedString *)titleForCard:(Card *)card
+{
+    return [[NSAttributedString alloc] initWithString:card.contents attributes:@{NSForegroundColorAttributeName : [UIColor redColor]}];
+}
+
+- (UIImage *)backgroundImageForCard:(Card *)card
+{
+    return [UIImage imageNamed:@"cardfront"];
 }
 
 @end

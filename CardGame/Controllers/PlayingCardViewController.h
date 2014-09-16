@@ -8,7 +8,6 @@
 
 #import "CardGameViewController.h"
 #import "CardMatchingGame.h"
-#import "PlayingCardDeck.h"
 
 @interface PlayingCardViewController : CardGameViewController
 - (CardMatchingGame *)game;

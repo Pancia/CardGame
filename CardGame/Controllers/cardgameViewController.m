@@ -1,5 +1,5 @@
 //
-//  cardgameViewController.m
+//  CardGameViewController.m
 //  CardGame
 //
 //  Created by Anthony D'Ambrosio on 7/25/14.
@@ -47,8 +47,13 @@
     for (UIButton *cardButton in self.cardButtons) {
         int cardIndex = [self.cardButtons indexOfObject:cardButton];
         Card *card = [self.game cardAtIndex:cardIndex];
-        [cardButton setTitle:[self titleForCard:card]
-                    forState:UIControlStateNormal];
+        if (card.isChosen) {
+            [cardButton setAttributedTitle:
+             [[NSAttributedString alloc] initWithString:card.contents attributes:@{NSForegroundColorAttributeName : [UIColor blueColor]}]
+                              forState:UIControlStateNormal];
+        } else {
+            [cardButton setAttributedTitle:[self titleForCard:card] forState:UIControlStateNormal];
+        }
         [cardButton setBackgroundImage:[self backgroundImageForCard:card]
                               forState:UIControlStateNormal];
         cardButton.enabled = !card.isMatched;
@@ -56,9 +61,9 @@
     self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d", self.game.score];
 }
 
-- (NSString *)titleForCard:(Card *)card
+- (NSAttributedString *)titleForCard:(Card *)card
 {
-    return card.isChosen ? card.contents : @"";
+    return [[NSAttributedString alloc] initWithString:(card.isChosen ? card.contents : @"")];
 }
 
 - (UIImage *)backgroundImageForCard:(Card *)card
